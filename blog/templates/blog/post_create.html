@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+  <h1 class="mb-4">Create a New Post</h1>
+  <div class="card shadow-sm p-4">
+    <form method="post" class="needs-validation" novalidate>
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_title" class="form-label">Title</label>
+        {{ form.title|add_class:'form-control' }}
+        <div class="invalid-feedback">Please provide a title for your post.</div>
+      </div>
+      <div class="mb-3">
+        <label for="id_content" class="form-label">Content</label>
+        {{ form.content|add_class:'form-control' }}
+        <div class="invalid-feedback">Content cannot be empty.</div>
+      </div>
+      <button type="submit" class="btn btn-dark btn-sm w-40">Submit Post</button>
+    </form>
+  </div>
+
+  <script>
+    // Add Bootstrap validation
+    ;(function () {
+      'use strict'
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+          'submit',
+          function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+          },
+          false
+        )
+      })
+    })()
+  </script>
+{% endblock %}
